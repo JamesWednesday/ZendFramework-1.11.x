@@ -65,11 +65,12 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
     /**#@-*/
 
     /**
+     * //JAH HACK 07-02-2012
      * Optional allowed attributes for script tag
      * @var array
      */
     protected $_optionalAttributes = array(
-        'charset', 'defer', 'language', 'src'
+        'charset', 'defer', 'language', 'src', 'id'
     );
 
     /**
@@ -467,7 +468,10 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
             if (!$this->_isValid($item)) {
                 continue;
             }
-
+            //JAH HACK 07-02-2012
+            if($item->type == 'text/html') {
+                $escapeStart = $escapeEnd = "";
+            }
             $items[] = $this->itemToString($item, $indent, $escapeStart, $escapeEnd);
         }
 
