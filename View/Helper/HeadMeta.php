@@ -208,8 +208,8 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
             return false;
         }
 
-        // <meta property= ... /> is only supported with doctype RDFa
-        if (!$this->view->doctype()->isRdfa()
+        // <meta property= ... /> is only supported with doctype RDFa. JAH 2011 Allow HTML5, assume it will get in to (re)SPEC.
+        if ( (!$this->view->doctype()->isRdfa() && !$this->view->doctype()->isHtml5() )
             && $item->type === 'property') {
             return false;
         }
