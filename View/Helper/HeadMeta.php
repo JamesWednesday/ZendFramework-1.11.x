@@ -15,8 +15,8 @@
  * @category   Zend
  * @package    Zend_View
  * @subpackage Helper
- * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: HeadMeta.php 23775 2011-03-01 17:25:24Z ralph $
+ * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id: HeadMeta.php 24594 2012-01-05 21:27:01Z matthew $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -30,7 +30,7 @@ require_once 'Zend/View/Helper/Placeholder/Container/Standalone.php';
  * @uses       Zend_View_Helper_Placeholder_Container_Standalone
  * @package    Zend_View
  * @subpackage Helper
- * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_Standalone
@@ -208,8 +208,8 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
             return false;
         }
 
-        // <meta property= ... /> is only supported with doctype RDFa. JAH 2011 Allow HTML5, assume it will get in to (re)SPEC.
-        if ( (!$this->view->doctype()->isRdfa() && !$this->view->doctype()->isHtml5() )
+        // <meta property= ... /> is only supported with doctype RDFa
+        if (!$this->view->doctype()->isRdfa()
             && $item->type === 'property') {
             return false;
         }
@@ -375,6 +375,14 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
             $this->_escape($item->content),
             $modifiersString
         );
+        
+        if (isset($item->modifiers['conditional'])
+            && !empty($item->modifiers['conditional'])
+            && is_string($item->modifiers['conditional']))
+        {
+            $meta = '<!--[if ' . $this->_escape($item->modifiers['conditional']) . ']>' . $meta . '<![endif]-->';
+        }
+        
         return $meta;
     }
 
