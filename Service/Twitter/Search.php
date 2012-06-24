@@ -135,6 +135,8 @@ class Zend_Service_Twitter_Search extends Zend_Rest_Client
 
         foreach($params as $key=>$param) {
             switch($key) {
+                case 'with_twitter_user_id':
+            	case 'include_entities':            
                 case 'geocode':
                 case 'lang':
                 case 'since_id':
